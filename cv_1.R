@@ -2,7 +2,7 @@
 
 library(ggplot2)
 
-mtcars <- read.csv('C:/Users/tomik/OneDrive/Plocha/Škola/0208/mtcars.csv')
+mtcars <- read.csv('C:/Users/tomik/OneDrive/Plocha/Å kola/0208/mtcars.csv')
 
 ggplot(data=mtcars, aes(x = hp)) +
   geom_histogram(bins =  7, fill = 'red', color = 'white', ) +
