@@ -5,17 +5,17 @@ library(ggplot2)
 mtcars <- read.csv('C:/Users/tomik/OneDrive/Plocha/Škola/0208/mtcars.csv')
 
 ggplot(data=mtcars, aes(x = hp)) +
-  geom_histogram(bins =  20, fill = 'red', color = 'white', ) +
+  geom_histogram(bins =  7, fill = 'red', color = 'white', ) +
   labs(x = 'Horsepower', y = 'Count') + 
   ggtitle('Histogram of Horsepower')
 
 ggplot(data=mtcars, aes(x = mpg)) +
-  geom_histogram(bins= 20, fill = 'black', color = 'white', ) +
+  geom_histogram(binwidth = 4, fill = 'black', color = 'white', ) +
   labs(x = 'Miles per Gallon', y = 'Count') + 
   ggtitle('Histogram of Miles per Gallon')
 
 ggplot(data=mtcars, aes(x = wt)) +
-  geom_histogram(bins = 20, fill = 'cyan', color = 'white', ) +
+  geom_histogram(binwidth = 1, fill = 'cyan', color = 'white', ) +
   labs(x = 'Weight(t)', y = 'Count') + 
   ggtitle('Histogram of Weight')
 
