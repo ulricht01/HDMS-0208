@@ -1,0 +1,52 @@
+def bayesian_optimization_clustering(data, n_components_range):
+    best_score = -np.inf
+    optimal_params = None
+    cluster_assignments = None
+    
+    for n_components in n_components_range:
+        bgmm = BayesianGaussianMixture(n_components=n_components, random_state=42)
+        bgmm.fit(data)
+        score = calinski_harabasz_score(data, bgmm.predict(data))
+        
+        if score > best_score:
+            best_score = score
+            optimal_params = {'n_components': n_components}
+            cluster_assignments = bgmm.predict(data)
+    
+    return optimal_params, cluster_assignments
+
+# Funkce pro aglomerativní klastrování
+def agglomerative_clustering(data, n_clusters):
+    clustering_model = AgglomerativeClustering(n_clusters=n_clusters)
+    cluster_assignments = clustering_model.fit_predict(data)
+    return cluster_assignments
+
+# Klastrování pro všechny sloupce (bez cílového sloupce)
+X = normalized_df.drop('quality', axis=1)
+
+# Bayesian Gaussian Mixture Model (BGMM)
+n_components_range = range(2, 10)
+bgmm = BayesianGaussianMixture(n_components=max(n_components_range), random_state=42)
+bgmm.fit(X)
+bgmm_clusters = bgmm.predict(X)
+
+# Aglomerativní klastrování
+n_clusters_agglomerative = 3
+agglomerative_model = AgglomerativeClustering(n_clusters=n_clusters_agglomerative)
+agglomerative_clusters = agglomerative_model.fit_predict(X)
+
+# Vizualizace výsledků
+plt.figure(figsize=(15, 5))
+
+# BGMM
+plt.subplot(1, 2, 1)
+sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=bgmm_clusters, palette='viridis', legend='full')
+plt.title('BGMM Clustering')
+
+# Aglomerativní klastrování
+plt.subplot(1, 2, 2)
+sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=agglomerative_clusters, palette='viridis', legend='full')
+plt.title('Agglomerative Clustering')
+
+plt.tight_layout()
+plt.show()
